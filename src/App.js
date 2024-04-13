@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 
 
 import getDesignTokens from "./styles/MyTheme";
+import NavBar from "components/NavBar";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
@@ -17,9 +18,10 @@ function App() {
   localStorage.setItem("mode", mode);
   
   return (
+    
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <h1>hello world</h1>
+      <NavBar/>
       <Button
         onClick={() => {
           setMode(mode === "light" ? "dark" : "light");
