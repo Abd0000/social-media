@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+// @ts-ignore
+import React, { useMemo, useState } from "react";
+import { createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Button from "@mui/material/Button";
+
+
+
+import getDesignTokens from "./styles/MyTheme";
 
 function App() {
+  const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
+
+  // @ts-ignore
+  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+  localStorage.setItem("mode", mode);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <h1>hello world</h1>
+      <Button
+        onClick={() => {
+          setMode(mode === "light" ? "dark" : "light");
+        }}
+        variant="text"
+        color="primary"
+      >
+        click meeeeeeeeee
+      </Button>
+    </ThemeProvider>
   );
 }
 
