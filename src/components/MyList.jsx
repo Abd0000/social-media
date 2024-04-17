@@ -6,7 +6,6 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import InboxIcon from "@mui/icons-material/Inbox";
 import { styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
@@ -89,19 +88,7 @@ const MyList = ({ setMode, mode }) => {
           </ListItemButton>
         </ListItem>
       ))}
-      <ListItem key="switch-dark-light-mode" disablePadding>
-        <ListItemButton>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </ListItemButton>
-      </ListItem>
-
       <FormControlLabel
-      
-       
-
         control={
           <MaterialUISwitch
           sx={{ m: 2 }}
@@ -110,7 +97,7 @@ const MyList = ({ setMode, mode }) => {
           />
         }
         label={
-          mode==='light'?"dark": "light"}
+          mode==='light'?"Light": "Dark"}
       />
     </List>
   );

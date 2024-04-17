@@ -13,7 +13,7 @@ const getDesignTokens = (mode) => ({
             dark: "#00BFFF",
           },
           grey: {
-            main: grey[300],
+            main: grey[100],
           },
         }
       : {

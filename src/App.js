@@ -9,6 +9,7 @@ import NavBar from "components/NavBar";
 import MyList from "components/MyList";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Posts from "components/Posts";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
@@ -23,27 +24,25 @@ function App() {
       <NavBar />
 
       <Stack spacing={0} direction={"row"}>
-        <Box className="border" sx={{ flexGrow: "1.2" ,display:{ xs:"none",   xl:"block" }}}>
+        <Box
+
+          sx={{
+            flexGrow: "1.3",
+            display: { xs: "none", xl: "block" },
+            bgcolor: "grey.main",
+          }}
+        >
           <MyList setMode={setMode} mode={mode} />
         </Box>
+          <Posts/>
         <Typography
-          className="border"
-          sx={{ flexGrow: "3" ,height:"100vh" }}
-          variant="h1"
-          color="primary"
-        >
-          Hello World
-        </Typography>
-        <Typography
-          className="border "
           sx={{ flexGrow: "1.5" }}
-          variant="body1"
-          color="initial"
+          variant="h4"
+          color="error"
         >
           welcome
         </Typography>
       </Stack>
-
     </ThemeProvider>
   );
 }
