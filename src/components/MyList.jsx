@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import List from "@mui/material/List";
 import {
   ListItem,
@@ -77,9 +77,29 @@ const myList = [
   { title: "Profile", url: "/profile", icon: <AccountCircleOutlined /> },
 ];
 
-const MyList = ({ setMode, mode }) => {
+const MyList = ({ setMode, mode,setShow }) => {
+  const listRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (listRef.current && !listRef.current.contains(event.target)) {
+        setShow("none"); // Hide the list when clicked outside
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [setShow]);
+
   return (
-    <List sx={{ position: "fixed" }}>
+    <List
+      className={mode === "light" ? "show-on-mobile-light" : "show-on-mobile-dark"}
+      sx={{ position: "fixed" }}
+      ref={listRef}
+      
+    >
       {myList.map((item) => (
         <ListItem key={item.title} disablePadding>
           <ListItemButton>
@@ -91,13 +111,12 @@ const MyList = ({ setMode, mode }) => {
       <FormControlLabel
         control={
           <MaterialUISwitch
-          sx={{ m: 2 }}
+            sx={{ m: 2 }}
             checked={mode === "dark"}
             onChange={(e) => setMode(e.target.checked ? "dark" : "light")}
           />
         }
-        label={
-          mode==='light'?"Light": "Dark"}
+        label={mode === "light" ? "Light" : "Dark"}
       />
     </List>
   );

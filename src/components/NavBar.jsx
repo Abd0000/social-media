@@ -56,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const NavBar = () => {
+const NavBar = ({setShow, show}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -122,7 +122,10 @@ const NavBar = () => {
   
       <AppBar position="sticky">
         <Toolbar>
-          <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }}>
+          <IconButton
+          
+          onClick={() => {setShow(show === "none" ? "block" : "none")}}
+           size="large" edge="start" color="inherit" sx={{ mr: 2 , display:{md:"none"}}}>
             <MenuIcon />
           </IconButton>
 

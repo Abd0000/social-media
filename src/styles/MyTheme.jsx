@@ -12,7 +12,7 @@ const getDesignTokens = (mode) => ({
             light: "#87CEFA",
             dark: "#00BFFF",
           },
-          grey: {
+          myColor: {
             main: grey[100],
           },
         }
@@ -23,8 +23,8 @@ const getDesignTokens = (mode) => ({
             light: orange[300],
             dark: orange[700],
           },
-          grey: {
-            main: grey[800],
+          myColor: {
+            main: "black",
           },
         }),
   },

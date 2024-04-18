@@ -87,7 +87,7 @@ const Posts = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: "3" }}>
+    <Box>
       {myPosts.map((post) => {
         return (
           <Card sx={{ maxWidth: 380, mx: "auto", my: "40px" }}>

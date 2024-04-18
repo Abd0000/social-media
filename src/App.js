@@ -8,40 +8,44 @@ import getDesignTokens from "./styles/MyTheme";
 import NavBar from "components/NavBar";
 import MyList from "components/MyList";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Posts from "components/Posts";
+import Status from "components/Status";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
-
   // @ts-ignore
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
   localStorage.setItem("mode", mode);
 
+  const [show, setShow] = useState("none");
+
+  
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NavBar />
+      <NavBar setShow={setShow} show={show} />
 
       <Stack spacing={0} direction={"row"}>
         <Box
-
           sx={{
-            flexGrow: "1.3",
-            display: { xs: "none", xl: "block" },
-            bgcolor: "grey.main",
+            flexGrow: "1.5",
+            display: { xs: show, md: "block" },
+            bgcolor: "myColor.main",
+
           }}
         >
-          <MyList setMode={setMode} mode={mode} />
+          <MyList setMode={setMode} mode={mode} setShow={setShow} />
         </Box>
-          <Posts/>
-        <Typography
-          sx={{ flexGrow: "1.5" }}
-          variant="h4"
-          color="error"
+        <Box sx={{ flexGrow:"3" }}>
+             <Posts/>
+        </Box>
+       
+        <Box
+          sx={{ flexGrow:"2.5" , display: { xs: "none", xl: "block" }}}
         >
-          welcome
-        </Typography>
+         <Status />
+        </Box>
       </Stack>
     </ThemeProvider>
   );
