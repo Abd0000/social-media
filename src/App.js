@@ -10,6 +10,7 @@ import MyList from "components/MyList";
 import Box from "@mui/material/Box";
 import Posts from "components/Posts";
 import Status from "components/Status";
+import ModalButton from "components/ModalButton";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
@@ -46,6 +47,7 @@ function App() {
         >
          <Status />
         </Box>
+        <ModalButton/>
       </Stack>
     </ThemeProvider>
   );
