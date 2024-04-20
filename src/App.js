@@ -1,4 +1,3 @@
-// @ts-ignore
 import React, { useMemo, useState } from "react";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
@@ -11,6 +10,7 @@ import Box from "@mui/material/Box";
 import Posts from "components/Posts";
 import Status from "components/Status";
 import ModalButton from "components/ModalButton";
+import Divider from "@mui/material/Divider";
 
 function App() {
   const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
@@ -20,34 +20,33 @@ function App() {
 
   const [show, setShow] = useState("none");
 
-  
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <NavBar setShow={setShow} show={show} />
 
-      <Stack spacing={0} direction={"row"}>
+      <Stack
+        spacing={0}
+        direction={"row"}
+        divider={<Divider orientation="vertical" flexItem />}
+      >
         <Box
           sx={{
             flexGrow: "1.5",
             display: { xs: show, md: "block" },
             bgcolor: "myColor.main",
-
           }}
         >
-          <MyList setMode={setMode} mode={mode} setShow={setShow} />
+          <MyList {...{ mode, setMode, setShow }} />
         </Box>
-        <Box sx={{ flexGrow:"3" }}>
-             <Posts/>
+        <Box sx={{ flexGrow: "3" }}>
+          <Posts />
         </Box>
-       
-        <Box
-          sx={{ flexGrow:"2.5" , display: { xs: "none", xl: "block" }}}
-        >
-         <Status />
+
+        <Box sx={{ flexGrow: "2.5", display: { xs: "none", xl: "block" } }}>
+          <Status />
         </Box>
-        <ModalButton/>
+        <ModalButton />
       </Stack>
     </ThemeProvider>
   );

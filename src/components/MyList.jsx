@@ -95,6 +95,7 @@ const MyList = ({ setMode, mode,setShow }) => {
 
   return (
     <List
+    component={"nav"}
       className={mode === "light" ? "show-on-mobile-light" : "show-on-mobile-dark"}
       sx={{ position: "fixed" }}
       ref={listRef}

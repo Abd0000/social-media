@@ -56,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const NavBar = ({setShow, show}) => {
+const NavBar = ({ setShow, show }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -119,70 +119,83 @@ const NavBar = ({setShow, show}) => {
   );
 
   return (
-  
-      <AppBar position="sticky">
-        <Toolbar>
+    <AppBar position="sticky" component={"header"}>
+      <Toolbar>
+        <IconButton
+          onClick={() => {
+            setShow(show === "none" ? "block" : "none");
+          }}
+          size="large"
+          edge="start"
+          color="inherit"
+          sx={{ mr: 2, display: { md: "none" } }}
+        >
+          <MenuIcon />
+        </IconButton>
+
+        <Typography
+          variant="h6"
+          noWrap
+          component="div"
+          sx={{ display: { xs: "none", sm: "block" } }}
+        >
+          Abdo Social
+        </Typography>
+
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase placeholder="Search…" />
+        </Search>
+
+        <Box sx={{ flexGrow: 1 }} />
+
+        <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
           <IconButton
-          
-          onClick={() => {setShow(show === "none" ? "block" : "none")}}
-           size="large" edge="start" color="inherit" sx={{ mr: 2 , display:{md:"none"}}}>
-            <MenuIcon />
+            sx={{ width: "50px", height: "50px" }}
+            size="large"
+            color="inherit"
+          >
+            <Badge badgeContent={4} color="error">
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <IconButton
+            sx={{ width: "50px", height: "50px" }}
+            size="large"
+            color="inherit"
+          >
+            <Badge badgeContent={17} color="error">
+              <NotificationsIcon />
+            </Badge>
           </IconButton>
 
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+          <IconButton
+            size="large"
+            edge="end"
+            onClick={handleProfileMenuOpen}
+            color="inherit"
           >
-            Abdo Social
-          </Typography>
-
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase placeholder="Search…" />
-          </Search>
-
-          <Box sx={{ flexGrow: 1 }} />
-
-          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems:"center" }}>
-            <IconButton sx={{width:"50px",height: "50px"}} size="large" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton sx={{width:"50px",height: "50px"}} size="large" color="inherit">
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-
-            <IconButton
-              size="large"
-              edge="end"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <Avatar sx={{width:"50px",height: "50px"}} src=".\images\PhotoRoom-20231020_155127.png" />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
-        {renderMobileMenu}
+            <Avatar
+              sx={{ width: "50px", height: "50px" }}
+              src=".\images\PhotoRoom-20231020_155127.png"
+            />
+          </IconButton>
+        </Box>
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <IconButton
+            size="large"
+            onClick={handleMobileMenuOpen}
+            color="inherit"
+          >
+            <MoreIcon />
+          </IconButton>
+        </Box>
+      </Toolbar>
+      {renderMobileMenu}
       {renderMenu}
-      </AppBar>
- 
-
+    </AppBar>
   );
 };
 

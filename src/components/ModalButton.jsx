@@ -17,7 +17,8 @@ import {
 } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { IconButton } from '@mui/material'
+import { IconButton } from "@mui/material";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -47,13 +48,16 @@ const ModalButton = () => {
       </Tooltip>
 
       <Modal
+        sx={{
+          xs: { width: "95" },
+        }}
         keepMounted
         open={open}
         onClose={handleClose}
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} component={"form"}>
           <Typography
             textAlign={"center"}
             id="keep-mounted-modal-title"
@@ -64,7 +68,12 @@ const ModalButton = () => {
           </Typography>
 
           <Stack mt={1} direction={"row"} alignItems={"center"}>
-            <Avatar sx={{width:"50px",height:"50px"}} src=".\images\PhotoRoom-20231020_155127.png" >A</Avatar>
+            <Avatar
+              sx={{ width: "50px", height: "50px" }}
+              src=".\images\PhotoRoom-20231020_155127.png"
+            >
+              A
+            </Avatar>
             <Typography ml={2} variant="body1" color="inherit">
               Abdo
             </Typography>
@@ -87,14 +96,14 @@ const ModalButton = () => {
             <Person2Rounded />
           </Stack>
 
-          <ButtonGroup fullWidth sx={{mt:2}} variant="contained">
-            <Button sx={{flexGrow:'1'}} >Post</Button>
-          
+          <ButtonGroup fullWidth sx={{ mt: 2 }} variant="contained">
+            <Button sx={{ flexGrow: "1" }} type="submit">
+              Post
+            </Button>
+
             <IconButton>
-                <CalendarMonthOutlined/>
+              <CalendarMonthOutlined />
             </IconButton>
-            
-     
           </ButtonGroup>
         </Box>
       </Modal>

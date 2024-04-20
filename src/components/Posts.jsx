@@ -17,6 +17,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { useTheme } from "@mui/material/styles";
 
 const myPosts = [
   {
@@ -29,7 +30,7 @@ const myPosts = [
   },
   {
     letter: "R",
-    color: "#FF0000",
+    color: "#FFA500",
     title: "Rana",
     date: "September 13, 2012",
     imgLink:
@@ -37,7 +38,7 @@ const myPosts = [
   },
   {
     letter: "M",
-    color: "#FF0000",
+    color: "#FFFF00",
     title: "Mohamed",
     date: "September 14, 2016",
     imgLink:
@@ -45,7 +46,7 @@ const myPosts = [
   },
   {
     letter: "S",
-    color: "#FF0000",
+    color: "#008000",
     title: "Sara",
     date: "September 14, 2016",
     imgLink:
@@ -56,6 +57,7 @@ const myPosts = [
 const Posts = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const theme = useTheme();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -87,20 +89,29 @@ const Posts = () => {
   };
 
   return (
-    <Box>
+    <Box component={"main"}>
       {myPosts.map((post) => {
         return (
-          <Card sx={{ maxWidth: 380, mx: "auto", my: "40px" }}>
+          <Card
+            key={post.imgLink}
+            sx={{ maxWidth: 380, mx: "auto", my: "40px", width: { xs: "95%" } }}
+          >
             <CardHeader
               avatar={
-                <Avatar sx={{ bgcolor: post.color }} aria-label="recipe">
+                <Avatar
+                  sx={{
+                    color: theme.palette.getContrastText(post.color),
+                    bgcolor: post.color,
+                    fontWeight: "bold",
+                  }}
+                  aria-label="recipe"
+                >
                   {post.letter}
                 </Avatar>
               }
               action={
-                <IconButton aria-label="settings">
-                  <MoreVertIcon onClick={handleClick} />
-                  {menuItem()}
+                <IconButton onClick={handleClick} aria-label="settings">
+                  <MoreVertIcon />
                 </IconButton>
               }
               title={post.title}
@@ -128,7 +139,7 @@ const Posts = () => {
               <IconButton aria-label="share">
                 <ShareIcon />
               </IconButton>
-              <div style={{flexGrow:'1'}}></div>
+              <div style={{ flexGrow: "1" }}></div>
               <Checkbox
                 icon={<BookmarkBorderIcon />}
                 checkedIcon={<BookmarkIcon />}
@@ -137,6 +148,7 @@ const Posts = () => {
           </Card>
         );
       })}
+      {menuItem()}
     </Box>
   );
 };
