@@ -64,7 +64,7 @@ import { DeleteOutlineOutlined } from "@mui/icons-material";
 //   },
 // ];
 
-const Posts = (postUpdate) => {
+const Posts = ({ postUpdate, search }) => {
   const [myPosts, setPosts] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -125,63 +125,74 @@ const Posts = (postUpdate) => {
 
   return (
     <Box component={"main"}>
-      {myPosts.map((post) => {
-        return (
-          <Card
-            key={post.imgLink}
-            sx={{ maxWidth: 380, mx: "auto", my: "40px", width: { xs: "95%" } }}
-          >
-            <CardHeader
-              avatar={
-                <Avatar
-                  sx={{
-                    color: theme.palette.getContrastText(post.color),
-                    bgcolor: post.color,
-                    fontWeight: "bold",
-                  }}
-                  aria-label="recipe"
-                >
-                  {post.letter}
-                </Avatar>
-              }
-              action={
-                <IconButton onClick={handleClick} aria-label="settings">
-                  <MoreVertIcon />
-                </IconButton>
-              }
-              title={post.title}
-              subheader={post.date}
-            />
-            <CardMedia
-              component="img"
-              height="194"
-              image={post.imgLink}
-              alt="Paella dish"
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {post.content}
-              </Typography>
-            </CardContent>
-            <CardActions disableSpacing>
-              <Checkbox
-                icon={<FavoriteBorder />}
-                checkedIcon={<Favorite color="error" />}
+      {myPosts
+        .filter((post) => {
+          return post.content.toLowerCase() === ""
+            ? post
+            : post.content.toLowerCase().includes(search.toLowerCase());
+        })
+        .map((post) => {
+          return (
+            <Card
+              key={post.imgLink}
+              sx={{
+                maxWidth: 380,
+                mx: "auto",
+                my: "40px",
+                width: { xs: "95%" },
+              }}
+            >
+              <CardHeader
+                avatar={
+                  <Avatar
+                    sx={{
+                      color: theme.palette.getContrastText(post.color),
+                      bgcolor: post.color,
+                      fontWeight: "bold",
+                    }}
+                    aria-label="recipe"
+                  >
+                    {post.letter}
+                  </Avatar>
+                }
+                action={
+                  <IconButton onClick={handleClick} aria-label="settings">
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                title={post.title}
+                subheader={post.date}
               />
+              <CardMedia
+                component="img"
+                height="194"
+                image={post.imgLink}
+                alt="Paella dish"
+              />
+              <CardContent>
+                <Typography variant="body2" color="text.secondary">
+                  {post.content}
+                </Typography>
+              </CardContent>
+              <CardActions disableSpacing>
+                <Checkbox
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite color="error" />}
+                />
 
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
-              <div style={{ flexGrow: "1" }}></div>
-              <Checkbox
-                icon={<BookmarkBorderIcon />}
-                checkedIcon={<BookmarkIcon />}
-              />
-              {menuItem(post.id)}
-            </CardActions>
-          </Card>
-        );
-      })}
+                <IconButton aria-label="share">
+                  <ShareIcon />
+                </IconButton>
+                <div style={{ flexGrow: "1" }}></div>
+                <Checkbox
+                  icon={<BookmarkBorderIcon />}
+                  checkedIcon={<BookmarkIcon />}
+                />
+                {menuItem(post.id)}
+              </CardActions>
+            </Card>
+          );
+        })}
     </Box>
   );
 };
