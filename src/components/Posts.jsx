@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -18,46 +18,65 @@ import MenuItem from "@mui/material/MenuItem";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useTheme } from "@mui/material/styles";
+import { DeleteOutlineOutlined } from "@mui/icons-material";
 
-const myPosts = [
-  {
-    letter: "A",
-    color: "#FF0000",
-    title: "Abdo",
-    date: "September 14, 2016",
-    imgLink:
-      "https://images.pexels.com/photos/20937747/pexels-photo-20937747/free-photo-of-a-camera-and-a-glass-on-a-table.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-  },
-  {
-    letter: "R",
-    color: "#FFA500",
-    title: "Rana",
-    date: "September 13, 2012",
-    imgLink:
-      "https://images.pexels.com/photos/20687375/pexels-photo-20687375/free-photo-of-woman-wearing-white-sweater-on-a-beach.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-  },
-  {
-    letter: "M",
-    color: "#FFFF00",
-    title: "Mohamed",
-    date: "September 14, 2016",
-    imgLink:
-      "https://images.pexels.com/photos/16168169/pexels-photo-16168169/free-photo-of-woman-in-off-shouder-dress.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-  },
-  {
-    letter: "S",
-    color: "#008000",
-    title: "Sara",
-    date: "September 14, 2016",
-    imgLink:
-      "https://images.pexels.com/photos/15045087/pexels-photo-15045087/free-photo-of-woman-in-hat-sitting-in-car.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-  },
-];
+// const myPosts = [
+//   {
+//     letter: "A",
+//     color: "#FF0000",
+//     title: "Abdo",
+//     date: "September 14, 2016",
+//     imgLink:
+//       "https://images.pexels.com/photos/20937747/pexels-photo-20937747/free-photo-of-a-camera-and-a-glass-on-a-table.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+//     content:
+//       "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.",
+//   },
 
-const Posts = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+//   {
+//     letter: "R",
+//     color: "#FFA500",
+//     title: "Rana",
+//     date: "September 13, 2012",
+//     imgLink:
+//       "https://images.pexels.com/photos/20687375/pexels-photo-20687375/free-photo-of-woman-wearing-white-sweater-on-a-beach.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+//     content:
+//       "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.",
+//   },
+//   {
+//     letter: "M",
+//     color: "#FFFF00",
+//     title: "Mohamed",
+//     date: "September 14, 2016",
+//     imgLink:
+//       "https://images.pexels.com/photos/16168169/pexels-photo-16168169/free-photo-of-woman-in-off-shouder-dress.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+//     content:
+//       "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.",
+//   },
+//   {
+//     letter: "S",
+//     color: "#008000",
+//     title: "Sara",
+//     date: "September 14, 2016",
+//     imgLink:
+//       "https://images.pexels.com/photos/15045087/pexels-photo-15045087/free-photo-of-woman-in-hat-sitting-in-car.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+//     content:
+//       "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.",
+//   },
+// ];
+
+const Posts = (postUpdate) => {
+  const [myPosts, setPosts] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const theme = useTheme();
+
+  useEffect(() => {
+    fetch("http://localhost:3500/mydata")
+      .then((response) => response.json())
+      .then((data) => setPosts(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [postUpdate]); // Add setPosts as a dependency to re-run effect when it changes
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -65,7 +84,17 @@ const Posts = () => {
     setAnchorEl(null);
   };
 
-  const menuItem = () => {
+  const menuItem = (id) => {
+    const deletePost = () => {
+      fetch(`http://localhost:3500/mydata/${id}`, {
+        method: "DELETE",
+      })
+        .then(() => {
+          setPosts(myPosts.filter((post) => post.id !== id));
+        })
+        .catch((error) => console.error("Error deleting data:", error));
+    };
+
     return (
       <Menu
         id="demo-positioned-menu"
@@ -82,8 +111,14 @@ const Posts = () => {
           horizontal: "left",
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>Account</MenuItem>
+        <MenuItem
+          onClick={() => {
+            deletePost();
+            handleClose();
+          }}
+        >
+          <DeleteOutlineOutlined color="error" fontSize="small" />{" "}
+        </MenuItem>
       </Menu>
     );
   };
@@ -125,9 +160,7 @@ const Posts = () => {
             />
             <CardContent>
               <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to
-                cook together with your guests. Add 1 cup of frozen peas along
-                with the mussels, if you like.
+                {post.content}
               </Typography>
             </CardContent>
             <CardActions disableSpacing>
@@ -144,11 +177,11 @@ const Posts = () => {
                 icon={<BookmarkBorderIcon />}
                 checkedIcon={<BookmarkIcon />}
               />
+              {menuItem(post.id)}
             </CardActions>
           </Card>
         );
       })}
-      {menuItem()}
     </Box>
   );
 };

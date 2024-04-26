@@ -8,8 +8,8 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
+import UploadUseWidget from "./UploadUseWidget";
 import {
-  CalendarMonthOutlined,
   EmojiEmotionsRounded,
   Person2Rounded,
   PhotoAlbumRounded,
@@ -17,7 +17,7 @@ import {
 } from "@mui/icons-material";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
-import { IconButton } from "@mui/material";
+import { useForm } from "react-hook-form";
 
 const style = {
   position: "absolute",
@@ -31,10 +31,79 @@ const style = {
   borderRadius: "10px",
 };
 
-const ModalButton = () => {
+const getRandomColor = () => {
+  // Generate a random hexadecimal color code
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
+};
+
+const getCurrentDate = () => {
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const day = String(currentDate.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const getRandomName = () => {
+  const names = [
+    "John",
+    "Jane",
+    "Michael",
+    "Emily",
+    "William",
+    "Sophia",
+    "James",
+    "Olivia",
+    "Daniel",
+    "Ava",
+  ]; // Add more names as needed
+  let name = names[Math.floor(Math.random() * names.length)];
+  let firstLetter = name[0].toUpperCase();
+
+  return { name, firstLetter };
+};
+
+const ModalButton = ({ handlePostUpdate }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm()
+  const handleUploadSuccess = (imageUrl) => {
+    // Set the value of imgLink field using setValue
+    setValue("imgLink", imageUrl);
+  };
+
+  const onSubmit = ({ content, imgLink }) => {
+    const { name, firstLetter } = getRandomName();
+    const data = {
+      imgLink:
+        imgLink ||
+        "https://img.freepik.com/vetores-premium/new-post-neon-signs-estilo-de-texto_118419-1349.jpg?w=740",
+      content: content,
+      letter: firstLetter,
+      title: name,
+      date: getCurrentDate(),
+      color: getRandomColor(),
+    };
+    fetch("http://localhost:3500/mydata", {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then(() => {
+      reset();
+      handlePostUpdate();
+      handleClose();
+    });
+    console.log(data);
+  };
 
   return (
     <Box>
@@ -57,7 +126,7 @@ const ModalButton = () => {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box sx={style} component={"form"}>
+        <Box sx={style} onSubmit={handleSubmit(onSubmit)} component={"form"}>
           <Typography
             textAlign={"center"}
             id="keep-mounted-modal-title"
@@ -80,6 +149,7 @@ const ModalButton = () => {
           </Stack>
 
           <TextField
+            
             fullWidth
             margin="normal"
             id="contained-multiline-static"
@@ -87,6 +157,11 @@ const ModalButton = () => {
             multiline
             rows={3}
             placeholder="What's on your mind?"
+            {...register("content", {
+              required: { value: true, message: "content is required" },
+            })}
+            error={Boolean(errors.content)}
+            helperText={errors.content?.message.toString()}
           />
 
           <Stack spacing={1} direction={"row"}>
@@ -100,10 +175,7 @@ const ModalButton = () => {
             <Button sx={{ flexGrow: "1" }} type="submit">
               Post
             </Button>
-
-            <IconButton>
-              <CalendarMonthOutlined />
-            </IconButton>
+            <UploadUseWidget handleUploadSuccess={handleUploadSuccess} />
           </ButtonGroup>
         </Box>
       </Modal>

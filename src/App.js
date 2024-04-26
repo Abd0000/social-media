@@ -17,8 +17,12 @@ function App() {
   // @ts-ignore
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
   localStorage.setItem("mode", mode);
-
   const [show, setShow] = useState("none");
+  const [postUpdate, setPostUpdate] = useState(false);
+  
+  const handlePostUpdate = () => {
+    setPostUpdate(!postUpdate);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -40,13 +44,13 @@ function App() {
           <MyList {...{ mode, setMode, setShow }} />
         </Box>
         <Box sx={{ flexGrow: "3" }}>
-          <Posts />
+          <Posts postUpdate={postUpdate} />
         </Box>
 
         <Box sx={{ flexGrow: "2.5", display: { xs: "none", xl: "block" } }}>
           <Status />
         </Box>
-        <ModalButton />
+        <ModalButton handlePostUpdate={ handlePostUpdate} />
       </Stack>
     </ThemeProvider>
   );

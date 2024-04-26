@@ -1,0 +1,36 @@
+{
+  "mydata": [
+    {
+      "letter": "A",
+      "color": "#FF0000",
+      "title": "Abdo",
+      "date": "September 14, 2016",
+      "imgLink": "https://images.pexels.com/photos/20937747/pexels-photo-20937747/free-photo-of-a-camera-and-a-glass-on-a-table.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+      "content": "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like."
+    },
+    {
+      "letter": "R",
+      "color": "#FFA500",
+      "title": "Rana",
+      "date": "September 13, 2012",
+      "imgLink": "https://images.pexels.com/photos/20687375/pexels-photo-20687375/free-photo-of-woman-wearing-white-sweater-on-a-beach.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+      "content": "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like."
+    },
+    {
+      "letter": "M",
+      "color": "#FFFF00",
+      "title": "Mohamed",
+      "date": "September 14, 2016",
+      "imgLink": "https://images.pexels.com/photos/16168169/pexels-photo-16168169/free-photo-of-woman-in-off-shouder-dress.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+      "content": "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like."
+    },
+    {
+      "letter": "S",
+      "color": "#008000",
+      "title": "Sara",
+      "date": "September 14, 2016",
+      "imgLink": "https://images.pexels.com/photos/15045087/pexels-photo-15045087/free-photo-of-woman-in-hat-sitting-in-car.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
+      "content": "This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like."
+    }
+  ]
+}
