@@ -19,6 +19,7 @@ import {
   SettingsOutlined,
   StorefrontOutlined,
 } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -77,8 +78,9 @@ const myList = [
   { title: "Profile", url: "/profile", icon: <AccountCircleOutlined /> },
 ];
 
-const MyList = ({ setMode, mode,setShow }) => {
+const MyList = ({ setMode, mode, setShow }) => {
   const listRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -87,23 +89,24 @@ const MyList = ({ setMode, mode,setShow }) => {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [setShow]);
 
   return (
     <List
-    component={"nav"}
-      className={mode === "light" ? "show-on-mobile-light" : "show-on-mobile-dark"}
+      component={"nav"}
+      className={
+        mode === "light" ? "show-on-mobile-light" : "show-on-mobile-dark"
+      }
       sx={{ position: "fixed" }}
       ref={listRef}
-      
     >
       {myList.map((item) => (
         <ListItem key={item.title} disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => navigate(item.url)}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.title} />
           </ListItemButton>

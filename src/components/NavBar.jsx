@@ -56,7 +56,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const NavBar = ({ setShow, show }) => {
+const NavBar = ({ setShow, show , setSearch}) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -142,11 +142,13 @@ const NavBar = ({ setShow, show }) => {
           Abdo Social
         </Typography>
 
-        <Search>
+        <Search  >
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
-          <StyledInputBase placeholder="Search…" />
+          <StyledInputBase onChange={(e)=>{
+            setSearch(e.target.value)
+          }} placeholder="Search…" />
         </Search>
 
         <Box sx={{ flexGrow: 1 }} />

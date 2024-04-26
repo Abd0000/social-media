@@ -1,58 +1,31 @@
-import React, { useMemo, useState } from "react";
-import { createTheme } from "@mui/material/styles";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import Stack from "@mui/material/Stack";
-import getDesignTokens from "./styles/MyTheme";
-import NavBar from "components/NavBar";
-import MyList from "components/MyList";
-import Box from "@mui/material/Box";
-import Posts from "components/Posts";
-import Status from "components/Status";
-import ModalButton from "components/ModalButton";
-import Divider from "@mui/material/Divider";
+import Root from "components/Root";
+import Home from "pages/home/Home";
+import NotFound from "pages/notfound/NotFound";
+
+
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Root />}>
+     <Route index element={<Home  />} />
+      <Route path="*" element={<NotFound />} />
+      
+    </Route>
+  )
+);
 
 function App() {
-  const [mode, setMode] = useState(localStorage.getItem("mode") || "light");
-  // @ts-ignore
-  const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
-  localStorage.setItem("mode", mode);
-  const [show, setShow] = useState("none");
-  const [postUpdate, setPostUpdate] = useState(false);
-  
-  const handlePostUpdate = () => {
-    setPostUpdate(!postUpdate);
-  }
+ 
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <NavBar setShow={setShow} show={show} />
-
-      <Stack
-        spacing={0}
-        direction={"row"}
-        divider={<Divider orientation="vertical" flexItem />}
-      >
-        <Box
-          sx={{
-            flexGrow: "1.5",
-            display: { xs: show, md: "block" },
-            bgcolor: "myColor.main",
-          }}
-        >
-          <MyList {...{ mode, setMode, setShow }} />
-        </Box>
-        <Box sx={{ flexGrow: "3" }}>
-          <Posts postUpdate={postUpdate} />
-        </Box>
-
-        <Box sx={{ flexGrow: "2.5", display: { xs: "none", xl: "block" } }}>
-          <Status />
-        </Box>
-        <ModalButton handlePostUpdate={ handlePostUpdate} />
-      </Stack>
-    </ThemeProvider>
+    <RouterProvider router={router} />
   );
 }
 
