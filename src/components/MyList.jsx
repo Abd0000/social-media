@@ -81,6 +81,9 @@ const myList = [
 const MyList = ({ setMode, mode, setShow }) => {
   const listRef = useRef(null);
   const navigate = useNavigate();
+  
+  
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -101,11 +104,11 @@ const MyList = ({ setMode, mode, setShow }) => {
       className={
         mode === "light" ? "show-on-mobile-light" : "show-on-mobile-dark"
       }
-      sx={{ position: "fixed" }}
+      sx={{ position: "fixed",height: "100%"}}
       ref={listRef}
     >
       {myList.map((item) => (
-        <ListItem key={item.title} disablePadding>
+        <ListItem sx={{width:"100%"}} key={item.title} disablePadding>
           <ListItemButton onClick={() => navigate(item.url)}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.title} />
